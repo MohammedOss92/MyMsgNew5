@@ -18,7 +18,7 @@ import com.sarrawi.msgs.viewModel.MyViewModelFactory
 
 //@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
+//aaaaaaa
     private lateinit var binding: ActivityMainBinding
     lateinit var viewModel: MsgsTypesViewModel
     private lateinit var msgstypesAdapter: MsgsTypes_Adapter
