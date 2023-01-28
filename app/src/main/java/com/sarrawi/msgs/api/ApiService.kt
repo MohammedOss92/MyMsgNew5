@@ -1,7 +1,5 @@
 package com.sarrawi.msgs.api
 
-import com.sarrawi.msgs.helper.Constants
-import com.sarrawi.msgs.models.MsgsTypesModel
 import com.sarrawi.msgs.models.MsgsTypesResponse
 import retrofit2.Response
 import retrofit2.Retrofit
