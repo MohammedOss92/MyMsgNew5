@@ -1,9 +1,11 @@
 package com.sarrawi.msgs.models
 
+import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+
 @Entity(tableName = "msg_types_table")
 data class MsgsTypesModel(
     // // sweilem edit
@@ -11,14 +13,14 @@ data class MsgsTypesModel(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     @SerializedName("id")
-    val id:Int ,
+    @NonNull
+    var id: Int = 0,
 
     @ColumnInfo(name = "MsgTypes")
     @SerializedName("MsgTypes")
-    val MsgTypes:String ,
+    var MsgTypes: String?,
 
     @ColumnInfo(name = "new_msg")
     @SerializedName("new_msg")
-    val new_msg:Int
-
-                          )
+    var new_msg: Int
+)

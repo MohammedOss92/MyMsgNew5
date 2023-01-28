@@ -1,16 +1,20 @@
 package com.sarrawi.msgs
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
-import androidx.activity.viewModels
+import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sarrawi.msgs.adapter.MsgsTypes_Adapter
 import com.sarrawi.msgs.api.ApiService
 import com.sarrawi.msgs.databinding.ActivityMainBinding
+import com.sarrawi.msgs.db.LocaleSource
 import com.sarrawi.msgs.repository.MsgsTypesRepo
 import com.sarrawi.msgs.viewModel.MsgsTypesViewModel
 import com.sarrawi.msgs.viewModel.MyViewModelFactory
+
 
 //@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -24,10 +28,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val retrofitService = ApiService.provideRetrofitInstance()
-        val mainRepository = MsgsTypesRepo(retrofitService)
-        supportActionBar?.hide()
+        val mainRepository = MsgsTypesRepo(retrofitService, LocaleSource(this))
+      //  supportActionBar?.hide()
 
-        viewModel = ViewModelProvider(this, MyViewModelFactory(mainRepository)).get(MsgsTypesViewModel::class.java)
+        viewModel = ViewModelProvider(
+            this,
+            MyViewModelFactory(mainRepository)
+        ).get(MsgsTypesViewModel::class.java)
         setUpRv()
 
     }
@@ -45,11 +52,25 @@ class MainActivity : AppCompatActivity() {
             setHasFixedSize(true)
         }
 
-        viewModel.responseMsgsTypes.observe(this, { listTvShows ->
-
+        viewModel.responseMsgsTypes.observe(this) { listTvShows ->
             msgstypesAdapter.msgsTypesModel = listTvShows
+        }
 
-        })
+    }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.setting_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.refresh -> {
+                viewModel.refreshPosts()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

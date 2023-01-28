@@ -5,12 +5,13 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.sarrawi.msgs.db.Dao.MsgsTypesDao
 import com.sarrawi.msgs.models.MsgsTypesModel
 
-@Database(entities = [MsgsTypesModel::class], version = 1, exportSchema = false)
+@Database(entities = [MsgsTypesModel::class], version = 3, exportSchema = false)
 abstract class PostDatabas : RoomDatabase() {
 
-
+    abstract fun postsDao(): MsgsTypesDao
     companion object{
 
         @Volatile
